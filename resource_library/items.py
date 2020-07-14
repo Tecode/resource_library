@@ -10,3 +10,14 @@ class ResourceLibraryItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+
+class ChinazItem(scrapy.Item):
+    title = scrapy.Field()
+    img_url = scrapy.Field()
+    link_url = scrapy.Field()
+    download_url = scrapy.Field()
+    detail_img = scrapy.Field()
+    image_paths = scrapy.Field()
+    description = scrapy.Field()
+    type = scrapy.Field()

@@ -1,7 +1,19 @@
 <component name="ProjectDictionaryState">
   <dictionary name="aming">
     <words>
+      <w>autothrottle</w>
+      <w>chinaz</w>
+      <w>dupefilter</w>
+      <w>httpcache</w>
+      <w>httperror</w>
+      <w>imagespider</w>
+      <w>khtml</w>
+      <w>middlewares</w>
       <w>newspider</w>
+      <w>robotstxt</w>
+      <w>scrapy</w>
+      <w>telnetconsole</w>
+      <w>tucong</w>
     </words>
   </dictionary>
 </component>
