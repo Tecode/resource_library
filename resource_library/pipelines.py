@@ -19,7 +19,6 @@ import importlib
 
 importlib.reload(sys)
 
-
 # 导入数据库模块
 # 打开数据库连接
 db = pymysql.connect("127.0.0.1", "root", "123456", "web_site_db")
@@ -29,9 +28,10 @@ cursor = db.cursor()
 
 class ImageSpiderPipeline(object):
     def __init__(self):
-        self.file = open("D:/project/reptile/reptile/jd_book.json", 'w')
+        self.file = open("/Users/aming/testFile/dynamic_theme/document/network_image.json", 'w')
 
     def process_item(self, item, spider):
+        print(item, '----------------------OOOo')
         content = json.dumps(dict(item), ensure_ascii=False) + ',\n'
         self.file.write(content)
         return item
@@ -42,24 +42,26 @@ class ImageSpiderPipeline(object):
 
 # 保存图片
 class MyImagesPipeline(ImagesPipeline):
+
     def get_media_requests(self, item, info):
+        print(item, '----------------------OOO')
         header = {
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Encoding': 'gzip, deflate, sdch',
-            'Accept-Language': 'en-US,en;q=0.8',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'gzip, deflate, br',
             'Cache-Control': 'max-age=0',
-            'Host': 'img1.mm131.me',
-            'If-Modified-Since': 'Mon, 15 Jan 2018 02:18:26 GMT',
-            'If-None-Match': '"5a6ead54-5335"',
-            'Proxy-Connection': 'keep-alive',
-            'Referer': 'http://www.mm131.com/xinggan/',
+            # 'Host': 'img1.mm131.me',
+            'If-Modified-Since': 'Wed, 28 Mar 2018 14:33:26 GMT',
+            'If-None-Match': 'dbd856dbbc993f131420942feeccc56a',
+            # 'Proxy-Connection': 'keep-alive',
+            # 'Referer': 'https://photo.tuchong.com/',
             'Upgrade-Insecure-Requests': 1,
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36',
         }
-        yield scrapy.Request(item['img_url'], headers=header)
+        yield scrapy.Request(item['img_url'])
 
     def item_completed(self, results, item, info):
-        image_paths = [x['path'] for ok, x in results if ok]
+        # image_paths = [x['path'] for ok, x in results if ok]
         # if not image_paths:
         #     raise DropItem("Item contains no images")
         # item['image_paths'] = image_paths

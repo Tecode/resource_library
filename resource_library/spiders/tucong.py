@@ -2,15 +2,13 @@ import json
 
 import scrapy
 
+from resource_library.items import TucongItem
+
 
 class TucongSpider(scrapy.Spider):
     name = 'tucong'
-    allowed_domains = ['https://tuchong.com']
+    allowed_domains = ['tuchong.com', 'photo.tuchong.com']
     params = [
-        '人像'
-        '小清新',
-        '女孩',
-        '日系',
         '写真',
     ]
     start_index = 0
@@ -31,12 +29,16 @@ class TucongSpider(scrapy.Spider):
         if json_data['more'] and self.page < 100:
             for item_data in json_data['postList']:
                 for img_data in item_data['images']:
-                    base_url = 'https://photo.tuchong.com/';
-                    print(
-                        base_url + str(item_data['author_id']) + '/f/' + str(img_data['img_id']) + '.jpg')
+                    base_url = 'https://photo.tuchong.com/'
+                    item = TucongItem()
+                    item['img_url'] = base_url + str(item_data['author_id']) + '/f/' + str(img_data['img_id']) + '.jpg'
+                    item['width'] = img_data['width']
+                    item['height'] = img_data['height']
+                    item['img_id'] = img_data['img_id']
+                    yield item
             self.page += 1
-            yield scrapy.Request(self.get_url(), callback=self.parse, dont_filter=True)
+            yield scrapy.Request(self.get_url(), callback=self.parse)
         else:
             self.start_index += 1
             self.page = 1
-            yield scrapy.Request(self.get_url(), callback=self.parse, dont_filter=True)
+            yield scrapy.Request(self.get_url(), callback=self.parse)

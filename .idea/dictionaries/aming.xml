@@ -3,10 +3,14 @@
     <words>
       <w>autothrottle</w>
       <w>chinaz</w>
+      <w>downloadermiddlewares</w>
       <w>dupefilter</w>
       <w>httpcache</w>
+      <w>httpcompression</w>
       <w>httperror</w>
       <w>imagespider</w>
+      <w>jing</w>
+      <w>jingdong</w>
       <w>khtml</w>
       <w>middlewares</w>
       <w>newspider</w>

@@ -1,4 +1,4 @@
-<h1 align="center">Resource Library</h1>
+## Resource Library
 
 ## 安装
 ```
@@ -34,13 +34,7 @@ sudo docker run -it -p 8050:8050 scrapinghub/splash
 
 ```
 scrapy genspider name[baidu] webSite[http://baidu.com]
-
-scrapy crawl girlImage        // 爬去的是一个美女网站的封面图片,都是小图
-scrapy crawl imageDetail      // 爬去的是一个美女网站的大图
-scrapy crawl chinaz    // 爬取ChinaZ网站的PSD素材
-scrapy crawl jdBookWeb        // 爬取京东网站,需要scrapy-splash
-
-
+scrapy crowl [name]
 ```
 
 ## 注意

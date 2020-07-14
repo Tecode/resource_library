@@ -21,7 +21,7 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, li
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 # 保存图片地址
-IMAGES_STORE = 'C:/Users/Administrator/Desktop/picture'
+IMAGES_STORE = '/Volumes/Application/tucong'
 # HTTPERROR_ALLOWED_CODES = [404]
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 32
@@ -80,8 +80,8 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    # 'resource_library.pipelines.ImagespiderPipeline': 400,
-    # 'resource_library.pipelines.MyImagesPipeline': 400,
+    'resource_library.pipelines.ImageSpiderPipeline': 500,
+    'resource_library.pipelines.MyImagesPipeline': 400,
     # 'resource_library.pipelines.FreePsdPipeline': 500,
     # 'resource_library.pipelines.jdBookWebPipeline': 300,
 }
