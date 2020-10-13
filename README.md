@@ -26,9 +26,32 @@ sudo docker run -it -p 8050:8050 scrapinghub/splash
 
 ### 进入文件夹输入`scrapy`,命令行有`scrawl`,如下图
 
-<p align="center">
-    <img width="690" title="命令屏幕截图" src="./assets/scrapy_screen.png">
-</p>
+```bash
+amingdeMacBook-Pro:resource_library aming$ scrapy
+Scrapy 2.2.0 - project: resource_library
+
+Usage:
+  scrapy <command> [options] [args]
+
+Available commands:
+  bench         Run quick benchmark test
+  check         Check spider contracts
+  commands      
+  crawl         Run a spider
+  edit          Edit spider
+  fetch         Fetch a URL using the Scrapy downloader
+  genspider     Generate new spider using pre-defined templates
+  list          List available spiders
+  parse         Parse URL (using its spider) and print the results
+  runspider     Run a self-contained spider (without creating a project)
+  settings      Get settings values
+  shell         Interactive scraping console
+  startproject  Create new project
+  version       Print Scrapy version
+  view          Open URL in browser, as seen by Scrapy
+
+Use "scrapy <command> -h" to see more info about a command
+```
 
 ### 命令
 
