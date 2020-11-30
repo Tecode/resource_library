@@ -1,6 +1,10 @@
 # 下载视频课程
 #
 # 放入["title":"","src":""]格式数据会按文件夹下载文件
+import os
+import re
+import requests
+import time
 
 """
 var list = document.getElementsByClassName('title')
@@ -17,10 +21,7 @@ for(var index=0; index < list.length; index ++) {
 """
 
 # 计算机系统结构精讲
-"""
 listData = [{"title": "引言",
-             "src": "http://b2cstream.edu-edu.com/c231f9b90c544d8696b7ac3b63dbaec8/7e426e0770314af2b180840a8d84c31c-185536ce26bdf2321e739fa2ffc23661-fd.mp4"},
-            {"title": "第一章 概论",
              "src": "http://b2cstream.edu-edu.com/c231f9b90c544d8696b7ac3b63dbaec8/7e426e0770314af2b180840a8d84c31c-185536ce26bdf2321e739fa2ffc23661-fd.mp4"},
             {"title": "第一章 概论",
              "src": "http://b2cstream.edu-edu.com/c231f9b90c544d8696b7ac3b63dbaec8/7e426e0770314af2b180840a8d84c31c-185536ce26bdf2321e739fa2ffc23661-fd.mp4"},
@@ -64,7 +65,7 @@ listData = [{"title": "引言",
              "src": "http://b2cstream.edu-edu.com/73fe4e678a774707a270f52e91c1ed84/1f55fb3a18bd4f95a711437fb6fa19e0-23431707b774f0f3067361f70e786141-fd.mp4"},
             {"title": "2.4 指令系统的发展和改进（三）",
              "src": "http://b2cstream.edu-edu.com/8a88d35ad4924bc2bca7800e3b36ee97/5ead9bbd97804e5884639c800b61a409-f5a5cb9d1170fadf356a9ded31b0fb92-fd.mp4"},
-            {"title": "第三章 存储、中断、总线与I/O系统",
+            {"title": "第三章 存储、中断、总线与I-O系统",
              "src": "http://b2cstream.edu-edu.com/8a88d35ad4924bc2bca7800e3b36ee97/5ead9bbd97804e5884639c800b61a409-f5a5cb9d1170fadf356a9ded31b0fb92-fd.mp4"},
             {"title": "3.1 存储系统的基本要求和并行主存系统",
              "src": "http://b2cstream.edu-edu.com/651130261d3c4a4bbea76c81a6b3f966/98f4e4a98a0140bd981b5cc178e36463-c5db9a1360c0c2c899825df618d79e05-fd.mp4"},
@@ -72,9 +73,9 @@ listData = [{"title": "引言",
              "src": "http://b2cstream.edu-edu.com/9435360edca24e2a856695708cb6ebc1/11c20c5364da4d949071dfb93f6eb479-1168692ebc9e83de568e137791ac2e03-fd.mp4"},
             {"title": "3.3 总线系统",
              "src": "http://b2cstream.edu-edu.com/7a0409bb5ebf433e931252d658cdc5aa/637ed54086724bd89cf11640bed7218c-6e5582b524258a5c1af5214c927051ca-fd.mp4"},
-            {"title": "3.4 I/O系统（一）",
+            {"title": "3.4 I-O系统（一）",
              "src": "http://b2cstream.edu-edu.com/53948fd0b70541d782ac7a12f7b0d3a3/16cafd316e764847bcc85391f8234dbc-7ffa921deef9125e62e3149a580462be-fd.mp4"},
-            {"title": "3.4 I/O系统（二）",
+            {"title": "3.4 I-O系统（二）",
              "src": "http://b2cstream.edu-edu.com/78be1729417a4ba3b4e8aac279fb8e70/72750d747fa74108b836c9cdbb622c3f-89a915276b54e675f2487ce889c81916-fd.mp4"},
             {"title": "第四章 存储体系",
              "src": "http://b2cstream.edu-edu.com/78be1729417a4ba3b4e8aac279fb8e70/72750d747fa74108b836c9cdbb622c3f-89a915276b54e675f2487ce889c81916-fd.mp4"},
@@ -144,7 +145,7 @@ listData = [{"title": "引言",
              "src": "http://b2cstream.edu-edu.com/e32a527331e44e53b655bafd7d77e5a7/8535ef9706734db4b3b2a3df1b22f77a-309a07735322e3b67f0e12c534f08f9c-fd.mp4"},
             {"title": "8 数据流计算机和归约机",
              "src": "http://b2cstream.edu-edu.com/3b9104e908064201acd681bd001b62ce/91fd874ae034498d96f29e953dd34424-0ef56d9441d7463706cb170ffaeb0012-fd.mp4"}]
-"""
+
 
 # 数据库系统原理精讲（2018版）
 """
@@ -335,251 +336,287 @@ listData = [
 # 离散数学
 """
 listData = [
-  {
-    "title": "课程导学",
-    "src": "http://b2cstream.edu-edu.com/1c1bb519de274c029cedfc746cdb6867/5514f0e93c8f45f4a2b67082c533c3f8-9fbc525347c83ab7a7505ddc3c690bc4-fd.mp4"
-  },
-  {
-    "title": "第一部分 数理逻辑篇",
-    "src": "http://b2cstream.edu-edu.com/1c1bb519de274c029cedfc746cdb6867/5514f0e93c8f45f4a2b67082c533c3f8-9fbc525347c83ab7a7505ddc3c690bc4-fd.mp4"
-  },
-  {
-    "title": "第一部分 数理逻辑篇",
-    "src": "http://b2cstream.edu-edu.com/1c1bb519de274c029cedfc746cdb6867/5514f0e93c8f45f4a2b67082c533c3f8-9fbc525347c83ab7a7505ddc3c690bc4-fd.mp4"
-  },
-  {
-    "title": "数理逻辑篇介绍",
-    "src": "http://b2cstream.edu-edu.com/a8a6a9aa113946d48ac92138a169bb92/7ebdf7927564446daff376618e039ead-11e99aafe6ef25e5782c96c8bc8d2cda-fd.mp4"
-  },
-  {
-    "title": "1.1 命题与命题联结词(1)",
-    "src": "http://b2cstream.edu-edu.com/88518854186b44a2a8048a2bc3a49aa6/4e0c1a6f52cc46289cbc46265e803f50-31a94a4af12dec0b5e2193ec40d02ad8-fd.mp4"
-  },
-  {
-    "title": "1.1 命题与命题联结词(2)",
-    "src": "http://b2cstream.edu-edu.com/904c3fffdcc340d2b9a834ebf9406bcf/1bde632daa15403db07b9713445b6912-1555d3a0cc01455735da37f6e8356b81-fd.mp4"
-  },
-  {
-    "title": "1.2 命题公式的等值演算(1)",
-    "src": "http://b2cstream.edu-edu.com/87b756591eaa442aa462e26d193c4cd6/a3a4dc2afaf44c70b4c72c33d89f2425-f8067bf6c33835edc782d7259b8f0cd1-fd.mp4"
-  },
-  {
-    "title": "1.2 命题公式的等值演算(2)",
-    "src": "http://b2cstream.edu-edu.com/36f87407220648549e8db88cfe662681/a8c6c585baf1474c8bce6b53cc64f7c5-8c77ab3a70ca9b6548a5e00c13779a0d-fd.mp4"
-  },
-  {
-    "title": "1.2 命题公式的等值演算(3)",
-    "src": "http://b2cstream.edu-edu.com/de16d1516f4349a59a400e50690c583c/aceacd1094ac47358e4d7a6652c1e878-7a620d0bfeda4c525f6cd8eb1be27ce4-fd.mp4"
-  },
-  {
-    "title": "1.2 命题公式的等值演算(4)",
-    "src": "http://b2cstream.edu-edu.com/a3949d9a2cec433bacaed906a3b6d33c/ae20273ec6884deabd5de8a31b8074a1-257cc3b200e1c4b8df90ff1dee2d9238-fd.mp4"
-  },
-  {
-    "title": "1.3 联结词完备集",
-    "src": "http://b2cstream.edu-edu.com/135185563b604223a8fe68890e79cba3/be5e3865bea04237910a282cc537fb8a-da121bbb4d5eb82fa5a73815e3d1cb9f-fd.mp4"
-  },
-  {
-    "title": "2.1 范式",
-    "src": "http://b2cstream.edu-edu.com/b494c23ee6a34d21a217029bf5d31612/df77696827764d2f9d271e59e6d2abcf-c683b9616bbe532e660dcaf0ce8fb385-fd.mp4"
-  },
-  {
-    "title": "2.2 主范式(1)",
-    "src": "http://b2cstream.edu-edu.com/a288eaa5940446fb92203019cf840f70/f0439bca81254365914a0c794189ed8c-69e2d13801f3a6e8707e068fc7dc0d43-fd.mp4"
-  },
-  {
-    "title": "2.2 主范式(2)",
-    "src": "http://b2cstream.edu-edu.com/d05b8276387c4c35bf196ff6323efccf/8b26e01e56744ce78e2d7c8178560da2-0d6a4b2fa6799777c7ce9f5983dea43c-fd.mp4"
-  },
-  {
-    "title": "2.2 主范式(3)",
-    "src": "http://b2cstream.edu-edu.com/7e033e28505442bf9df81d320fea2ca5/96b252fd1ffe4d4cbaeac120367511bd-af7482e906b1f387c208e57aca93a851-fd.mp4"
-  },
-  {
-    "title": "2.3 自然推理系统(1)",
-    "src": "http://b2cstream.edu-edu.com/5da51428c25f4d9b891264d11ec4c40a/69014b8dee1143068de1ea8de621a5a2-1922774640f41f2256ba23dc61bd8160-fd.mp4"
-  },
-  {
-    "title": "2.3 自然推理系统(2)",
-    "src": "http://b2cstream.edu-edu.com/c5aea2a33cba4bfcb0155925febae12d/4874f66c77f24eaba2788897ab2b06d4-9441b7431840026f5859ce52bfe2213e-fd.mp4"
-  },
-  {
-    "title": "3.1 谓词的概念与表示(1)",
-    "src": "http://b2cstream.edu-edu.com/d8dba1afe7904252b891b0721cf3c16d/e7dee189ee944c98a3f0155ba44361b1-0df3b8ff3114b5e51f292ccc82a79529-fd.mp4"
-  },
-  {
-    "title": "3.1 谓词的概念与表示(2)",
-    "src": "http://b2cstream.edu-edu.com/aca65fd0419a4a398556d1f1f88304d7/f0f4ee2701b54134bf071249eaf7b220-f81485cffea2194b0fa60b9721c3293e-fd.mp4"
-  },
-  {
-    "title": "3.2 合式公式",
-    "src": "http://b2cstream.edu-edu.com/9e1fe99138524c1e8b41ab36efa0bb5c/f991d44232a44034b8b8bf9e53af956d-3311606c2c6fedec416ee1f8d7480327-fd.mp4"
-  },
-  {
-    "title": "3.3 谓词演算的等价式与蕴涵式",
-    "src": "http://b2cstream.edu-edu.com/29726377061d473093ed4c32f7638c2f/37369cd1c2774b4bb0e2b5164ce7d70c-93caa94bebad5deaba61269cf0b69501-fd.mp4"
-  },
-  {
-    "title": "3.4 前束范式",
-    "src": "http://b2cstream.edu-edu.com/72c256c12f564eff8750e08c3231b2d5/e0840b00b7a847f3a116e314161156e0-297b8c69eea5e8c5e90856dffa9c15a3-fd.mp4"
-  },
-  {
-    "title": "3.5 谓词演算的推理理论",
-    "src": "http://b2cstream.edu-edu.com/b38773038ca44753832962fcd2c8ee75/89835dddf3f34c7bac84ed4050a4b6f7-dd42690ba8afac5dc3f39e41403e3c14-fd.mp4"
-  },
-  {
-    "title": "第二部分 集合论篇",
-    "src": "http://b2cstream.edu-edu.com/b38773038ca44753832962fcd2c8ee75/89835dddf3f34c7bac84ed4050a4b6f7-dd42690ba8afac5dc3f39e41403e3c14-fd.mp4"
-  },
-  {
-    "title": "集合论篇介绍",
-    "src": "http://b2cstream.edu-edu.com/f91262b397f040b086cbd252abba74c3/3e504e0c1d9245f0a1ea3e58c9fdfb4d-7ac2dcaa0949c814412fa78f652d2e8d-fd.mp4"
-  },
-  {
-    "title": "4.1 集合",
-    "src": "http://b2cstream.edu-edu.com/f0d38d2a4cc94026a24edceb2fd7045f/630fbf7f0cee4819b73b3f5be993c4ac-08f402c471d2ed0297ae0f95cc918398-fd.mp4"
-  },
-  {
-    "title": "4.2 集合的运算",
-    "src": "http://b2cstream.edu-edu.com/cbf965ea9fbe41798d64d30ade53aac4/9a32d3090bb3451a8da24d198e6fe255-b9f04f9a89e2eff63e17b2f7347f27ca-fd.mp4"
-  },
-  {
-    "title": "4.3 有序对与笛卡尔积",
-    "src": "http://b2cstream.edu-edu.com/b3af31833d3441b8a97c8e335eae7251/faf023099c644307aa6a0de7d80c1355-9eaa9d36ce7ea94b315adce29d7f06ba-fd.mp4"
-  },
-  {
-    "title": "5.1 关系及其性质(1)",
-    "src": "http://b2cstream.edu-edu.com/2ad6dde1d6ad40c3b8416fb67bdb0f05/10374741ff0d425390a1f3e20db07120-10e52717eebdece484234bc871876e3e-fd.mp4"
-  },
-  {
-    "title": "5.1 关系及其性质(2)",
-    "src": "http://b2cstream.edu-edu.com/f3e18bac10434a57ad16ddd706fa023a/c18174a638bd4f858fd1ad8a94690f49-1a96b82d62092d9bac787481c7649ae2-fd.mp4"
-  },
-  {
-    "title": "5.1 关系及其性质(3)",
-    "src": "http://b2cstream.edu-edu.com/e4db5ebad3ac43fc97233c10bbfa81b6/30b36a8d51f94f9aa4618c46af073097-678b12bd96d3001c01d40e405e83bf38-fd.mp4"
-  },
-  {
-    "title": "5.1 关系及其性质(4)",
-    "src": "http://b2cstream.edu-edu.com/4a1672e984c449c1a1b54a7d88dc4cb2/f9191ebc565e4dedab62a28e2897a117-9656f0d33b452efe50bb9ad9b9fcaa13-fd.mp4"
-  },
-  {
-    "title": "5.2 关系的运算(1)",
-    "src": "http://b2cstream.edu-edu.com/c2b24838451341dda140e23361539f09/7476d3ac05a94491b39271c6975eae35-77d48f13fec62513a35c6344236c3242-fd.mp4"
-  },
-  {
-    "title": "5.2 关系的运算(2)",
-    "src": "http://b2cstream.edu-edu.com/86cdc419ddea4a5a924adea3cc6c7052/0417074fea674bf2aab59586f8d12855-aa25a8c162184446efaa0c1cf2865ad4-fd.mp4"
-  },
-  {
-    "title": "5.2 关系的运算(3)",
-    "src": "http://b2cstream.edu-edu.com/bcd2d622789141eb9e7402e8d8f75eab/4731352d3a9a4229a4dd57c24bcf1e49-f1975b931d2e2cc460f50aa1bd4b2554-fd.mp4"
-  },
-  {
-    "title": "5.2 关系的运算(4)",
-    "src": "http://b2cstream.edu-edu.com/d3206b2eb58a43528335ee9c470d4b63/1a68f3b6ce5849fdb4f93645dc749953-32d536422c96d40da66e4d5e11bec8a4-fd.mp4"
-  },
-  {
-    "title": "5.2 关系的运算(5)",
-    "src": "http://b2cstream.edu-edu.com/fe2e93b61d7c41078e940d6532686992/34531aa2cbc34c348430e0528bb3d120-47e18e69581cfceec4bb4abc4582460d-fd.mp4"
-  },
-  {
-    "title": "5.2 关系的运算(6)",
-    "src": "http://b2cstream.edu-edu.com/82c1e39a137b458fb627cc6b3a3e6507/ec9607cf46aa4a9788d7eeae0d94232b-0e43a82eb6127ab58ff75835a361b48b-fd.mp4"
-  },
-  {
-    "title": "5.3 等价关系与序关系(1)",
-    "src": "http://b2cstream.edu-edu.com/ab2e1c2f70c5402fab33c49f61d5e990/def505efae864b1dadd60e7411bbdc1d-56d2442f0e5ed0c9f963750d264c2265-fd.mp4"
-  },
-  {
-    "title": "5.3 等价关系与序关系(2)",
-    "src": "http://b2cstream.edu-edu.com/3c3722e9b75943e6902881eb50b08f0a/bed472bd883347748c1e631b1917ae7b-2abee04126b864f625b7e61f24fc493e-fd.mp4"
-  },
-  {
-    "title": "5.3 等价关系与序关系(3)",
-    "src": "http://b2cstream.edu-edu.com/8c3003013da043a688a0ec8e5533746e/f91458f62c214c6aa087ca4e8a185e21-24bf2d28af4a02ba5e06effad56f835e-fd.mp4"
-  },
-  {
-    "title": "5.4 函数",
-    "src": "http://b2cstream.edu-edu.com/a911a2ead6894d4a8de73379d736afe2/fbffc9b806cf4e19990ee9ae91000979-9eb7b7c2eef65d902a6169026af2d4b0-fd.mp4"
-  },
-  {
-    "title": "第三部分 代数系统篇",
-    "src": "http://b2cstream.edu-edu.com/a911a2ead6894d4a8de73379d736afe2/fbffc9b806cf4e19990ee9ae91000979-9eb7b7c2eef65d902a6169026af2d4b0-fd.mp4"
-  },
-  {
-    "title": "代数系统篇介绍",
-    "src": "http://b2cstream.edu-edu.com/bf75bf121b534b83a7987dbc38ac6064/caaa719691734802af5f42dfa00b9278-2a1a001334889f1c87fd22f4e32d9013-fd.mp4"
-  },
-  {
-    "title": "6.1 代数系统",
-    "src": "http://b2cstream.edu-edu.com/6be29e58948e478b88c88bc1808a7e19/782f858d90e84d9e8d1a7b4797bd8e86-7ea1ec859472330498a7c332ffd18d25-fd.mp4"
-  },
-  {
-    "title": "6.2-6.3 群与半群、环",
-    "src": "http://b2cstream.edu-edu.com/3d2d400911a549588059d19fcaf2b8e7/cc8d9626cc074c0397109bce02a317b3-55d2e69ee87cb21261cf1eae464e4541-fd.mp4"
-  },
-  {
-    "title": "7.1-7.2 格、分配格和有补格",
-    "src": "http://b2cstream.edu-edu.com/db28d7ca9557416c89558a82c5575b28/9ca4d78bfe4e4927a415b2c48bcd3856-484025cde094ed81ced12e295137ad17-fd.mp4"
-  },
-  {
-    "title": "7.3 布尔代数",
-    "src": "http://b2cstream.edu-edu.com/4969f7bd52fc4c0d8061c3f0e45effee/94035423fd1a486f895a079cea297656-f20eb3824117556b868c7f79955346d8-fd.mp4"
-  },
-  {
-    "title": "第四部分 图论篇",
-    "src": "http://b2cstream.edu-edu.com/4969f7bd52fc4c0d8061c3f0e45effee/94035423fd1a486f895a079cea297656-f20eb3824117556b868c7f79955346d8-fd.mp4"
-  },
-  {
-    "title": "图论篇介绍",
-    "src": "http://b2cstream.edu-edu.com/bef5afc4880c4a70ae5bd6a41a35496b/a21374dea3414fefb199fb6bf2a94783-590ae00512730bdef408a946c5ef0188-fd.mp4"
-  },
-  {
-    "title": "8.1 图的基本概念(1)",
-    "src": "http://b2cstream.edu-edu.com/09f04d4abc5f4edbabaf71c1163ecdd6/986d7d8e3c444727ae89a7dedeb3253c-5efae193a0dec6bb3573bedf082de0ce-fd.mp4"
-  },
-  {
-    "title": "8.1 图的基本概念(2)",
-    "src": "http://b2cstream.edu-edu.com/b72addb1213b487c888f0dff8e8a195e/10b9d94d8f134473a01969cf305b8573-21d6199dfa92a5f5a23bfbacaf5311d0-fd.mp4"
-  },
-  {
-    "title": "8.2 图的连通性(1)",
-    "src": "http://b2cstream.edu-edu.com/c13e6d90685a48b2b1184a1a80ae47a5/61b6cc7f8f114a1b87bbccb17b7dbd72-54f41b982925e3483210e5e7dcb6f038-fd.mp4"
-  },
-  {
-    "title": "8.2 图的连通性(2)",
-    "src": "http://b2cstream.edu-edu.com/552d9c21f8d24fbea235944369f48797/a61f9f04aaa14c77ade297b0e2b28d2f-8a01fb3ff38ad5e74408f6ae2ad4d660-fd.mp4"
-  },
-  {
-    "title": "8.3 图的表示",
-    "src": "http://b2cstream.edu-edu.com/bdf611da148c4f678bf4e8ff6c2b4743/9f513606372f4437be2301135d46b672-7106f3d27a863a87664233c8907674f1-fd.mp4"
-  },
-  {
-    "title": "9.1 欧拉图与哈密顿图",
-    "src": "http://b2cstream.edu-edu.com/8d24ef70485c4bfd8875a55e760bb416/b794297fbdec42d6b75ea124d99912db-95d5620f9327c3008ffd23cceb798742-fd.mp4"
-  },
-  {
-    "title": "9.2-9.3 平面图、树及其遍历",
-    "src": "http://b2cstream.edu-edu.com/50356e6b8b3c4b24b0538de125bf1d99/07713589008648138933521c57d29e9e-66842c6a84bd4b18716065a549d085dc-fd.mp4"
-  }
+    {
+        "title": "课程导学",
+        "src": "http://b2cstream.edu-edu.com/1c1bb519de274c029cedfc746cdb6867/5514f0e93c8f45f4a2b67082c533c3f8-9fbc525347c83ab7a7505ddc3c690bc4-fd.mp4"
+    },
+    {
+        "title": "第一部分 数理逻辑篇",
+        "src": "http://b2cstream.edu-edu.com/1c1bb519de274c029cedfc746cdb6867/5514f0e93c8f45f4a2b67082c533c3f8-9fbc525347c83ab7a7505ddc3c690bc4-fd.mp4"
+    },
+    {
+        "title": "数理逻辑篇介绍",
+        "src": "http://b2cstream.edu-edu.com/a8a6a9aa113946d48ac92138a169bb92/7ebdf7927564446daff376618e039ead-11e99aafe6ef25e5782c96c8bc8d2cda-fd.mp4"
+    },
+    {
+        "title": "1.1 命题与命题联结词(1)",
+        "src": "http://b2cstream.edu-edu.com/88518854186b44a2a8048a2bc3a49aa6/4e0c1a6f52cc46289cbc46265e803f50-31a94a4af12dec0b5e2193ec40d02ad8-fd.mp4"
+    },
+    {
+        "title": "1.1 命题与命题联结词(2)",
+        "src": "http://b2cstream.edu-edu.com/904c3fffdcc340d2b9a834ebf9406bcf/1bde632daa15403db07b9713445b6912-1555d3a0cc01455735da37f6e8356b81-fd.mp4"
+    },
+    {
+        "title": "1.2 命题公式的等值演算(1)",
+        "src": "http://b2cstream.edu-edu.com/87b756591eaa442aa462e26d193c4cd6/a3a4dc2afaf44c70b4c72c33d89f2425-f8067bf6c33835edc782d7259b8f0cd1-fd.mp4"
+    },
+    {
+        "title": "1.2 命题公式的等值演算(2)",
+        "src": "http://b2cstream.edu-edu.com/36f87407220648549e8db88cfe662681/a8c6c585baf1474c8bce6b53cc64f7c5-8c77ab3a70ca9b6548a5e00c13779a0d-fd.mp4"
+    },
+    {
+        "title": "1.2 命题公式的等值演算(3)",
+        "src": "http://b2cstream.edu-edu.com/de16d1516f4349a59a400e50690c583c/aceacd1094ac47358e4d7a6652c1e878-7a620d0bfeda4c525f6cd8eb1be27ce4-fd.mp4"
+    },
+    {
+        "title": "1.2 命题公式的等值演算(4)",
+        "src": "http://b2cstream.edu-edu.com/a3949d9a2cec433bacaed906a3b6d33c/ae20273ec6884deabd5de8a31b8074a1-257cc3b200e1c4b8df90ff1dee2d9238-fd.mp4"
+    },
+    {
+        "title": "1.3 联结词完备集",
+        "src": "http://b2cstream.edu-edu.com/135185563b604223a8fe68890e79cba3/be5e3865bea04237910a282cc537fb8a-da121bbb4d5eb82fa5a73815e3d1cb9f-fd.mp4"
+    },
+    {
+        "title": "2.1 范式",
+        "src": "http://b2cstream.edu-edu.com/b494c23ee6a34d21a217029bf5d31612/df77696827764d2f9d271e59e6d2abcf-c683b9616bbe532e660dcaf0ce8fb385-fd.mp4"
+    },
+    {
+        "title": "2.2 主范式(1)",
+        "src": "http://b2cstream.edu-edu.com/a288eaa5940446fb92203019cf840f70/f0439bca81254365914a0c794189ed8c-69e2d13801f3a6e8707e068fc7dc0d43-fd.mp4"
+    },
+    {
+        "title": "2.2 主范式(2)",
+        "src": "http://b2cstream.edu-edu.com/d05b8276387c4c35bf196ff6323efccf/8b26e01e56744ce78e2d7c8178560da2-0d6a4b2fa6799777c7ce9f5983dea43c-fd.mp4"
+    },
+    {
+        "title": "2.2 主范式(3)",
+        "src": "http://b2cstream.edu-edu.com/7e033e28505442bf9df81d320fea2ca5/96b252fd1ffe4d4cbaeac120367511bd-af7482e906b1f387c208e57aca93a851-fd.mp4"
+    },
+    {
+        "title": "2.3 自然推理系统(1)",
+        "src": "http://b2cstream.edu-edu.com/5da51428c25f4d9b891264d11ec4c40a/69014b8dee1143068de1ea8de621a5a2-1922774640f41f2256ba23dc61bd8160-fd.mp4"
+    },
+    {
+        "title": "2.3 自然推理系统(2)",
+        "src": "http://b2cstream.edu-edu.com/c5aea2a33cba4bfcb0155925febae12d/4874f66c77f24eaba2788897ab2b06d4-9441b7431840026f5859ce52bfe2213e-fd.mp4"
+    },
+    {
+        "title": "3.1 谓词的概念与表示(1)",
+        "src": "http://b2cstream.edu-edu.com/d8dba1afe7904252b891b0721cf3c16d/e7dee189ee944c98a3f0155ba44361b1-0df3b8ff3114b5e51f292ccc82a79529-fd.mp4"
+    },
+    {
+        "title": "3.1 谓词的概念与表示(2)",
+        "src": "http://b2cstream.edu-edu.com/aca65fd0419a4a398556d1f1f88304d7/f0f4ee2701b54134bf071249eaf7b220-f81485cffea2194b0fa60b9721c3293e-fd.mp4"
+    },
+    {
+        "title": "3.2 合式公式",
+        "src": "http://b2cstream.edu-edu.com/9e1fe99138524c1e8b41ab36efa0bb5c/f991d44232a44034b8b8bf9e53af956d-3311606c2c6fedec416ee1f8d7480327-fd.mp4"
+    },
+    {
+        "title": "3.3 谓词演算的等价式与蕴涵式",
+        "src": "http://b2cstream.edu-edu.com/29726377061d473093ed4c32f7638c2f/37369cd1c2774b4bb0e2b5164ce7d70c-93caa94bebad5deaba61269cf0b69501-fd.mp4"
+    },
+    {
+        "title": "3.4 前束范式",
+        "src": "http://b2cstream.edu-edu.com/72c256c12f564eff8750e08c3231b2d5/e0840b00b7a847f3a116e314161156e0-297b8c69eea5e8c5e90856dffa9c15a3-fd.mp4"
+    },
+    {
+        "title": "3.5 谓词演算的推理理论",
+        "src": "http://b2cstream.edu-edu.com/b38773038ca44753832962fcd2c8ee75/89835dddf3f34c7bac84ed4050a4b6f7-dd42690ba8afac5dc3f39e41403e3c14-fd.mp4"
+    },
+    {
+        "title": "第二部分 集合论篇",
+        "src": "http://b2cstream.edu-edu.com/b38773038ca44753832962fcd2c8ee75/89835dddf3f34c7bac84ed4050a4b6f7-dd42690ba8afac5dc3f39e41403e3c14-fd.mp4"
+    },
+    {
+        "title": "集合论篇介绍",
+        "src": "http://b2cstream.edu-edu.com/f91262b397f040b086cbd252abba74c3/3e504e0c1d9245f0a1ea3e58c9fdfb4d-7ac2dcaa0949c814412fa78f652d2e8d-fd.mp4"
+    },
+    {
+        "title": "4.1 集合",
+        "src": "http://b2cstream.edu-edu.com/f0d38d2a4cc94026a24edceb2fd7045f/630fbf7f0cee4819b73b3f5be993c4ac-08f402c471d2ed0297ae0f95cc918398-fd.mp4"
+    },
+    {
+        "title": "4.2 集合的运算",
+        "src": "http://b2cstream.edu-edu.com/cbf965ea9fbe41798d64d30ade53aac4/9a32d3090bb3451a8da24d198e6fe255-b9f04f9a89e2eff63e17b2f7347f27ca-fd.mp4"
+    },
+    {
+        "title": "4.3 有序对与笛卡尔积",
+        "src": "http://b2cstream.edu-edu.com/b3af31833d3441b8a97c8e335eae7251/faf023099c644307aa6a0de7d80c1355-9eaa9d36ce7ea94b315adce29d7f06ba-fd.mp4"
+    },
+    {
+        "title": "5.1 关系及其性质(1)",
+        "src": "http://b2cstream.edu-edu.com/2ad6dde1d6ad40c3b8416fb67bdb0f05/10374741ff0d425390a1f3e20db07120-10e52717eebdece484234bc871876e3e-fd.mp4"
+    },
+    {
+        "title": "5.1 关系及其性质(2)",
+        "src": "http://b2cstream.edu-edu.com/f3e18bac10434a57ad16ddd706fa023a/c18174a638bd4f858fd1ad8a94690f49-1a96b82d62092d9bac787481c7649ae2-fd.mp4"
+    },
+    {
+        "title": "5.1 关系及其性质(3)",
+        "src": "http://b2cstream.edu-edu.com/e4db5ebad3ac43fc97233c10bbfa81b6/30b36a8d51f94f9aa4618c46af073097-678b12bd96d3001c01d40e405e83bf38-fd.mp4"
+    },
+    {
+        "title": "5.1 关系及其性质(4)",
+        "src": "http://b2cstream.edu-edu.com/4a1672e984c449c1a1b54a7d88dc4cb2/f9191ebc565e4dedab62a28e2897a117-9656f0d33b452efe50bb9ad9b9fcaa13-fd.mp4"
+    },
+    {
+        "title": "5.2 关系的运算(1)",
+        "src": "http://b2cstream.edu-edu.com/c2b24838451341dda140e23361539f09/7476d3ac05a94491b39271c6975eae35-77d48f13fec62513a35c6344236c3242-fd.mp4"
+    },
+    {
+        "title": "5.2 关系的运算(2)",
+        "src": "http://b2cstream.edu-edu.com/86cdc419ddea4a5a924adea3cc6c7052/0417074fea674bf2aab59586f8d12855-aa25a8c162184446efaa0c1cf2865ad4-fd.mp4"
+    },
+    {
+        "title": "5.2 关系的运算(3)",
+        "src": "http://b2cstream.edu-edu.com/bcd2d622789141eb9e7402e8d8f75eab/4731352d3a9a4229a4dd57c24bcf1e49-f1975b931d2e2cc460f50aa1bd4b2554-fd.mp4"
+    },
+    {
+        "title": "5.2 关系的运算(4)",
+        "src": "http://b2cstream.edu-edu.com/d3206b2eb58a43528335ee9c470d4b63/1a68f3b6ce5849fdb4f93645dc749953-32d536422c96d40da66e4d5e11bec8a4-fd.mp4"
+    },
+    {
+        "title": "5.2 关系的运算(5)",
+        "src": "http://b2cstream.edu-edu.com/fe2e93b61d7c41078e940d6532686992/34531aa2cbc34c348430e0528bb3d120-47e18e69581cfceec4bb4abc4582460d-fd.mp4"
+    },
+    {
+        "title": "5.2 关系的运算(6)",
+        "src": "http://b2cstream.edu-edu.com/82c1e39a137b458fb627cc6b3a3e6507/ec9607cf46aa4a9788d7eeae0d94232b-0e43a82eb6127ab58ff75835a361b48b-fd.mp4"
+    },
+    {
+        "title": "5.3 等价关系与序关系(1)",
+        "src": "http://b2cstream.edu-edu.com/ab2e1c2f70c5402fab33c49f61d5e990/def505efae864b1dadd60e7411bbdc1d-56d2442f0e5ed0c9f963750d264c2265-fd.mp4"
+    },
+    {
+        "title": "5.3 等价关系与序关系(2)",
+        "src": "http://b2cstream.edu-edu.com/3c3722e9b75943e6902881eb50b08f0a/bed472bd883347748c1e631b1917ae7b-2abee04126b864f625b7e61f24fc493e-fd.mp4"
+    },
+    {
+        "title": "5.3 等价关系与序关系(3)",
+        "src": "http://b2cstream.edu-edu.com/8c3003013da043a688a0ec8e5533746e/f91458f62c214c6aa087ca4e8a185e21-24bf2d28af4a02ba5e06effad56f835e-fd.mp4"
+    },
+    {
+        "title": "5.4 函数",
+        "src": "http://b2cstream.edu-edu.com/a911a2ead6894d4a8de73379d736afe2/fbffc9b806cf4e19990ee9ae91000979-9eb7b7c2eef65d902a6169026af2d4b0-fd.mp4"
+    },
+    {
+        "title": "第三部分 代数系统篇",
+        "src": "http://b2cstream.edu-edu.com/a911a2ead6894d4a8de73379d736afe2/fbffc9b806cf4e19990ee9ae91000979-9eb7b7c2eef65d902a6169026af2d4b0-fd.mp4"
+    },
+    {
+        "title": "代数系统篇介绍",
+        "src": "http://b2cstream.edu-edu.com/bf75bf121b534b83a7987dbc38ac6064/caaa719691734802af5f42dfa00b9278-2a1a001334889f1c87fd22f4e32d9013-fd.mp4"
+    },
+    {
+        "title": "6.1 代数系统",
+        "src": "http://b2cstream.edu-edu.com/6be29e58948e478b88c88bc1808a7e19/782f858d90e84d9e8d1a7b4797bd8e86-7ea1ec859472330498a7c332ffd18d25-fd.mp4"
+    },
+    {
+        "title": "6.2-6.3 群与半群、环",
+        "src": "http://b2cstream.edu-edu.com/3d2d400911a549588059d19fcaf2b8e7/cc8d9626cc074c0397109bce02a317b3-55d2e69ee87cb21261cf1eae464e4541-fd.mp4"
+    },
+    {
+        "title": "7.1-7.2 格、分配格和有补格",
+        "src": "http://b2cstream.edu-edu.com/db28d7ca9557416c89558a82c5575b28/9ca4d78bfe4e4927a415b2c48bcd3856-484025cde094ed81ced12e295137ad17-fd.mp4"
+    },
+    {
+        "title": "7.3 布尔代数",
+        "src": "http://b2cstream.edu-edu.com/4969f7bd52fc4c0d8061c3f0e45effee/94035423fd1a486f895a079cea297656-f20eb3824117556b868c7f79955346d8-fd.mp4"
+    },
+    {
+        "title": "第四部分 图论篇",
+        "src": "http://b2cstream.edu-edu.com/4969f7bd52fc4c0d8061c3f0e45effee/94035423fd1a486f895a079cea297656-f20eb3824117556b868c7f79955346d8-fd.mp4"
+    },
+    {
+        "title": "图论篇介绍",
+        "src": "http://b2cstream.edu-edu.com/bef5afc4880c4a70ae5bd6a41a35496b/a21374dea3414fefb199fb6bf2a94783-590ae00512730bdef408a946c5ef0188-fd.mp4"
+    },
+    {
+        "title": "8.1 图的基本概念(1)",
+        "src": "http://b2cstream.edu-edu.com/09f04d4abc5f4edbabaf71c1163ecdd6/986d7d8e3c444727ae89a7dedeb3253c-5efae193a0dec6bb3573bedf082de0ce-fd.mp4"
+    },
+    {
+        "title": "8.1 图的基本概念(2)",
+        "src": "http://b2cstream.edu-edu.com/b72addb1213b487c888f0dff8e8a195e/10b9d94d8f134473a01969cf305b8573-21d6199dfa92a5f5a23bfbacaf5311d0-fd.mp4"
+    },
+    {
+        "title": "8.2 图的连通性(1)",
+        "src": "http://b2cstream.edu-edu.com/c13e6d90685a48b2b1184a1a80ae47a5/61b6cc7f8f114a1b87bbccb17b7dbd72-54f41b982925e3483210e5e7dcb6f038-fd.mp4"
+    },
+    {
+        "title": "8.2 图的连通性(2)",
+        "src": "http://b2cstream.edu-edu.com/552d9c21f8d24fbea235944369f48797/a61f9f04aaa14c77ade297b0e2b28d2f-8a01fb3ff38ad5e74408f6ae2ad4d660-fd.mp4"
+    },
+    {
+        "title": "8.3 图的表示",
+        "src": "http://b2cstream.edu-edu.com/bdf611da148c4f678bf4e8ff6c2b4743/9f513606372f4437be2301135d46b672-7106f3d27a863a87664233c8907674f1-fd.mp4"
+    },
+    {
+        "title": "9.1 欧拉图与哈密顿图",
+        "src": "http://b2cstream.edu-edu.com/8d24ef70485c4bfd8875a55e760bb416/b794297fbdec42d6b75ea124d99912db-95d5620f9327c3008ffd23cceb798742-fd.mp4"
+    },
+    {
+        "title": "9.2-9.3 平面图、树及其遍历",
+        "src": "http://b2cstream.edu-edu.com/50356e6b8b3c4b24b0538de125bf1d99/07713589008648138933521c57d29e9e-66842c6a84bd4b18716065a549d085dc-fd.mp4"
+    }
 ]
 """
-
-listData = []
 
 # 去掉重复title
 deduplicationArr = []
 
-for data in listData:
-    if data['title'] not in deduplicationArr:
-        # print(data['title'], data['src'])
-        deduplicationArr.append(data['title'])
 
-for title in deduplicationArr:
+def deduplication():
+    folder_path = '/'
     for data in listData:
-        if title == data['title'] and len(data['src']) > 0:
-            print(title, data['src'])
+        if data['title'] not in deduplicationArr:
+            # print(data['title'], data['src'])
+            deduplicationArr.append(data['title'])
 
-print(len(deduplicationArr))
+    for title in deduplicationArr:
+        for data in listData:
+            if title == data['title'] and len(data['src']) > 0:
+                # print(title, data['src'])
+                if re.match(r'第.章', title) is not None:
+                    # print(title, data['src'], '目录')
+                    folder_path = '/' + title + '/'
+                else:
+                    downloadFile(folder_path, title + '.mp4', data['src'])
+                    # print(title, data['src'], '文件')
 
+    print(len(deduplicationArr))
+
+
+def downloadFile(path, name, url):
+    headers = {'Proxy-Connection': 'keep-alive'}
+    r = requests.get(url, stream=True, headers=headers)
+    length = float(r.headers['content-length'])
+    folder_path = ('F:/自考学习课程/计算机系统结构' + path)
+    print(folder_path + '\n')
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    f = open(folder_path + name, 'wb')
+    count = 0
+    count_tmp = 0
+    time1 = time.time()
+    for chunk in r.iter_content(chunk_size=512):
+        if chunk:
+            f.write(chunk)
+            count += len(chunk)
+            if time.time() - time1 > 2:
+                p = count / length * 100
+                speed = (count - count_tmp) / 1024 / 1024 / 2
+                count_tmp = count
+                print(name + ': ' + formatFloat(p) + '%' + ' 下载速度: ' + formatFloat(speed) + 'M/S')
+                time1 = time.time()
+    f.close()
+
+
+def formatFloat(num):
+    return '{:.2f}'.format(num)
+
+
+if __name__ == '__main__':
+    deduplication()
+    # downloadFile('360.exe', 'http://down.360safe.com/setup.exe')
