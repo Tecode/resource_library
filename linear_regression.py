@@ -1,6 +1,7 @@
 # numpy线性回归
 import numpy as np
 import tensorflow as tf
+import time
 
 # y = ax + b
 
@@ -16,8 +17,8 @@ y = tf.constant(y)
 a = tf.Variable(initial_value=0.)
 b = tf.Variable(initial_value=0.)
 variables = [a, b]
-
-num_epoch = 10000
+ticks = time.time()
+num_epoch = 1000000
 optimizer = tf.keras.optimizers.SGD(learning_rate=5e-4)
 for e in range(num_epoch):
     # 使用tf.GradientTape()记录损失函数的梯度信息
@@ -30,4 +31,6 @@ for e in range(num_epoch):
     optimizer.apply_gradients(grads_and_vars=zip(grads, variables))
 
 print(a, b)
+print(time.time() - ticks)
 # <tf.Variable 'Variable:0' shape=() dtype=float32, numpy=0.97637> <tf.Variable 'Variable:0' shape=() dtype=float32, numpy=0.057565063>
+# <tf.Variable 'Variable:0' shape=() dtype=float32, numpy=0.98176914> <tf.Variable 'Variable:0' shape=() dtype=float32, numpy=0.054570343>
