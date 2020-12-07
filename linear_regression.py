@@ -18,7 +18,7 @@ a = tf.Variable(initial_value=0.)
 b = tf.Variable(initial_value=0.)
 variables = [a, b]
 ticks = time.time()
-num_epoch = 1000000
+num_epoch = 10000
 optimizer = tf.keras.optimizers.SGD(learning_rate=5e-4)
 for e in range(num_epoch):
     # 使用tf.GradientTape()记录损失函数的梯度信息
