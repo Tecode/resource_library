@@ -1,1 +1,5 @@
 ./resource_library/spiders/__pycache__/
+__pycache__
+nohup.log
+.DS_Store
+.idea/

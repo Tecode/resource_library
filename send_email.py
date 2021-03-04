@@ -158,20 +158,21 @@ def main(email):
     # 输入SMTP服务器地址:
     smtp_server = 'smtp.qq.com'
 
-    server = smtplib.SMTP(smtp_server, 25)  # SMTP协议默认端口是25
+    server = smtplib.SMTP_SSL(smtp_server)
+    server.ehlo(smtp_server)
     # server.starttls() # 如果是SSL，则用 587 端口，再加上这句代码就行了
-    server.set_debuglevel(1)  # 打印出和SMTP服务器交互的所有信息
     server.login(from_addr, password)  # 登录SMTP服务器
-    server.sendmail(from_addr, [to_addr], msg.as_string())  # 发邮件
+    server.sendmail(from_addr, to_addr, msg.as_string())  # 发邮件
     server.quit()
 
 
 if __name__ == '__main__':
+    # main('283731869@qq.com')
     # 定时任务
     print('开始运行脚本')
     scheduler = BlockingScheduler()
     # 在 6：30 运行一次
-    scheduler.add_job(main, 'cron', hour='19', minute='10', args=['283731869@qq.com'])
+    scheduler.add_job(main, 'cron', hour='19', minute='32', args=['283731869@qq.com'])
     scheduler.add_job(main, 'cron', hour='7', minute='30', args=['964856415@qq.com'])
 
     scheduler.start()
