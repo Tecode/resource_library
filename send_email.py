@@ -172,7 +172,9 @@ if __name__ == '__main__':
     print('开始运行脚本')
     scheduler = BlockingScheduler()
     # 在 6：30 运行一次
-    scheduler.add_job(main, 'cron', hour='19', minute='32', args=['283731869@qq.com'])
+    scheduler.add_job(main, 'cron', hour='19', minute='30', args=['283731869@qq.com'])
+    scheduler.add_job(main, 'cron', hour='20', minute='30', args=['283731869@qq.com'])
+    scheduler.add_job(main, 'cron', hour='6', minute='30', args=['283731869@qq.com'])
     scheduler.add_job(main, 'cron', hour='7', minute='30', args=['964856415@qq.com'])
 
     scheduler.start()
