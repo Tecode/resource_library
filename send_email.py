@@ -11,12 +11,8 @@ from email import encoders
 from email.header import Header
 from email.utils import parseaddr, formataddr
 
-# from apscheduler.schedulers.background import BackgroundScheduler
 # 定时任务
-# scheduler = BlockingScheduler()
-# # 每天9：30给女朋友发送每日一句
-# # scheduler.add_job(start_today_info, 'cron', hour=9, minute=30)
-# scheduler.start()
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 # 图片地址
 url_array = [
@@ -103,7 +99,7 @@ def get_week_day(date):
     return week_day_dict[day]
 
 
-def main():
+def main(email):
     # 图片地址
     url = url_array[random.randint(0, 65)]
     print(url)
@@ -133,7 +129,7 @@ def main():
             <div style="padding: 10% 10% 0 10%; ">
                 <div style="color: white; border:8px white solid;background-repeat: no-repeat; background-size: cover; height: 100%; background-image: url('{url}'); ">
                     <div style="min-height: 240px">
-                        <p style="margin: 0;padding: 10px;font-size: 22px;font-weight: 500;">Dear,洁洁</p>
+                        <p style="margin: 0;padding: 10px;font-size: 20px;font-weight: 500;">Dear 洁洁</p>
                         <p style="margin: 0;padding:  0 10px; font-size: 14px;">新的一天开始啦，要开心噢（づ￣ 3￣)づ</p>
                     </div>
                     <div style="font-size: 36px; padding-left: 10px; font-weight: bold;">{today_date}</div>
@@ -149,7 +145,8 @@ def main():
         </div>
         </body>
         </html>
-    '''.format(l_date=l_date, week=week, content=random_data['content'], url=url, today_date=today_date), 'html', 'utf-8')
+    '''.format(l_date=l_date, week=week, content=random_data['content'], url=url, today_date=today_date), 'html',
+                   'utf-8')
     msg['From'] = Header('小明', 'utf-8')
     msg['To'] = Header('Dear,洁洁', 'utf-8')
     msg['Subject'] = Header('元气满满的一天开始啦，要开心噢（づ￣ 3￣)づ', 'utf-8').encode()
@@ -157,7 +154,7 @@ def main():
     from_addr = '283731869@qq.com'
     password = 'pmvaazermnqhbiae'
     # 输入收件人地址:
-    to_addr = 'ming.xie@naoxuejia.com'
+    to_addr = email
     # 输入SMTP服务器地址:
     smtp_server = 'smtp.qq.com'
 
@@ -170,4 +167,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # 定时任务
+    scheduler = BlockingScheduler()
+    # 在 6：30 运行一次
+    scheduler.add_job(main, 'cron', hour='19', minute='00', args=['283731869@qq.com'])
+    scheduler.add_job(main, 'cron', hour='7', minute='30', args=['964856415@qq.com'])
+
+    scheduler.start()
