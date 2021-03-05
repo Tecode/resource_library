@@ -101,7 +101,8 @@ def get_week_day(date):
 
 def main(email):
     # 图片地址
-    url = url_array[random.randint(0, 65)]
+    random.shuffle(url_array)
+    url = url_array[random.randint(0, len(url_array) - 1)]
     print(url)
     # 农历日期
     d_date = datetime.datetime.now().date()
@@ -114,8 +115,9 @@ def main(email):
     today_date = datetime.datetime.now().strftime('%m/%d')
     print(today_date)
     # 短语
-    file = open('./content.json')
+    file = open('./content.json', encoding="utf-8")
     list_data = json.load(file)['data']
+    random.shuffle(list_data)
     random_data = list_data[random.randint(0, len(list_data) - 1)]
     print(random_data['content'])
     msg = MIMEText('''
