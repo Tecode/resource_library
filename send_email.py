@@ -6,6 +6,7 @@ import lunar_calendar
 import random
 import datetime
 import json
+import time
 from email.mime.text import MIMEText
 from email import encoders
 from email.header import Header
@@ -85,6 +86,25 @@ url_array = [
 ]
 
 
+def autoIncrement():
+    currentDay = datetime.datetime.now().day
+    index: List[int] = [currentDay]
+
+    def adder(total: int):
+        if index[0] > total - 2:
+            index[0] = 0
+        else:
+            index[0] = index[0] + 1
+        return index[0]
+
+    return adder
+
+
+# 计算数组随机函数
+adderUrl = autoIncrement()
+adderText = autoIncrement()
+
+
 def get_week_day(date):
     week_day_dict = {
         0: '星期一',
@@ -101,9 +121,8 @@ def get_week_day(date):
 
 def main(email):
     # 图片地址
-    random.shuffle(url_array)
-    url = url_array[random.randint(0, len(url_array) - 1)]
-    print(url)
+    url = url_array[adderUrl(len(url_array))]
+    print(url, adderUrl(len(url_array)), len(url_array))
     # 农历日期
     d_date = datetime.datetime.now().date()
     l_date = lunar_calendar.lunarDate(d_date)[8:]
@@ -117,9 +136,8 @@ def main(email):
     # 短语
     file = open('./content.json', encoding="utf-8")
     list_data = json.load(file)['data']
-    random.shuffle(list_data)
-    random_data = list_data[random.randint(0, len(list_data) - 1)]
-    print(random_data['content'])
+    random_data = list_data[adderText(len(list_data))]
+    print(adderText(len(list_data)), len(list_data), random_data['content'])
     msg = MIMEText('''
         <html lang="en">
         <head>
@@ -175,9 +193,6 @@ if __name__ == '__main__':
     scheduler = BlockingScheduler()
     # 在 6：30 运行一次
     scheduler.add_job(main, 'cron', hour='19', minute='30', args=['283731869@qq.com'])
-    scheduler.add_job(main, 'cron', hour='20', minute='30', args=['283731869@qq.com'])
-    scheduler.add_job(main, 'cron', hour='22', minute='30', args=['283731869@qq.com'])
-    scheduler.add_job(main, 'cron', hour='23', minute='30', args=['283731869@qq.com'])
     scheduler.add_job(main, 'cron', hour='6', minute='30', args=['283731869@qq.com'])
     scheduler.add_job(main, 'cron', hour='7', minute='30', args=['964856415@qq.com'])
 
