@@ -1,5 +1,18 @@
 ## Resource Library
 
+## 使用邮件定时发送功能需要配置文件`email_config.ini`（我使用的是QQ邮箱）
+
+
+```
+[Email]
+from = 发件人
+to = 收件人
+subject = 元气满满的一天开始啦，要开心噢（づ￣ 3￣)づ
+from_addr = 邮箱
+password = 密码
+smtp_server = smtp.qq.com
+```
+
 ## 安装
 ```
 https://github.com/Tecode/resource_library.git
