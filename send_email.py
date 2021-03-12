@@ -11,6 +11,7 @@ from email.mime.text import MIMEText
 from email import encoders
 from email.header import Header
 from email.utils import parseaddr, formataddr
+import configparser
 
 # 定时任务
 from apscheduler.schedulers.blocking import BlockingScheduler
@@ -87,8 +88,8 @@ url_array = [
 
 
 def autoIncrement():
-    currentDay = datetime.datetime.now().day
-    index: List[int] = [currentDay]
+    current_day = datetime.datetime.now().day
+    index: List[int] = [current_day]
 
     def adder(total: int):
         if index[0] > total - 2:
@@ -120,6 +121,9 @@ def get_week_day(date):
 
 
 def main(email):
+    # 读取配置文件
+    config = configparser.ConfigParser()
+    config.read("./email_config.ini", encoding="utf-8")
     # 图片地址
     url = url_array[adderUrl(len(url_array))]
     print(url, adderUrl(len(url_array)), len(url_array))
@@ -145,11 +149,19 @@ def main(email):
             <title>Dear,洁洁 元气满满的一天开始啦，要开心噢（づ￣ 3￣)づ'</title>
         </head>
         <body>
-        <div style="width: 375px; height: 667px; margin: 0 auto; background-repeat: no-repeat; background-size: cover; background-image: url('{url}');">
+        <div style="width: 375px; 
+        height: 667px; margin: 0 auto; 
+        background-repeat: no-repeat; 
+        background-size: cover; 
+        background-image: url('{url}');">
             <div style="padding: 10% 10% 0 10%; ">
-                <div style="color: white; border:8px white solid;background-repeat: no-repeat; background-size: cover; height: 100%; background-image: url('{url}'); ">
+                <div style="color: white; 
+                border:6px white solid;
+                background-repeat: no-repeat; 
+                background-size: cover; 
+                height: 100%; background-image: url('{url}'); ">
                     <div style="min-height: 240px">
-                        <p style="margin: 0;padding: 10px;font-size: 20px;font-weight: 500;">Dear 洁洁</p>
+                        <p style="margin: 0;padding: 10px;font-size: 20px;font-weight: 500;">{to}</p>
                         <p style="margin: 0;padding:  0 10px; font-size: 14px;">新的一天开始啦，要开心噢（づ￣ 3￣)づ</p>
                     </div>
                     <div style="font-size: 36px; padding-left: 10px; font-weight: bold;">{today_date}</div>
@@ -157,7 +169,12 @@ def main(email):
                     <p style="padding: 0 0 20px 10px;margin: 0;">农历{l_date}</p>
                 </div>
             </div>
-            <div style="font-size: 14px; margin: 0 10%;padding: 20px 8px 0 8px; line-height: 20px; background-color: white; color: #16181A;">
+            <div style="font-size: 14px;
+             margin: 0 10%;
+             padding: 20px 8px 0 8px; 
+             line-height: 20px; 
+             background-color: white; 
+             color: #16181A;">
                 <p style="margin: 0; font-size: 40px; line-height: 4px;">“</p>
                 <p style="padding: 0 6px 0 10px; margin: 0">{content}</p>
                 <p style="margin: 0; font-size: 40px; text-align: right;line-height: 40px;">”</p>
@@ -165,18 +182,24 @@ def main(email):
         </div>
         </body>
         </html>
-    '''.format(l_date=l_date, week=week, content=random_data['content'], url=url, today_date=today_date), 'html',
-                   'utf-8')
-    msg['From'] = Header('爱你的小明(*^‧^*)', 'utf-8')
-    msg['To'] = Header('Dear,洁洁(~^O^~)', 'utf-8')
-    msg['Subject'] = Header('元气满满的一天开始啦，要开心噢（づ￣ 3￣)づ', 'utf-8').encode()
+    '''.format(
+        l_date=l_date,
+        week=week,
+        content=random_data['content'],
+        url=url,
+        today_date=today_date,
+        to=config.get('Email', 'to')
+    ), 'html', 'utf-8')
+    msg['From'] = Header(config.get('Email', 'from'), 'utf-8')
+    msg['To'] = Header(config.get('Email', 'to'), 'utf-8')
+    msg['Subject'] = Header(config.get('Email', 'subject'), 'utf-8').encode()
     # 输入Email地址和口令:
-    from_addr = '283731869@qq.com'
-    password = 'pmvaazermnqhbiae'
+    from_addr = config.get('Email', 'from_addr')
+    password = config.get('Email', 'password')
     # 输入收件人地址:
     to_addr = email
     # 输入SMTP服务器地址:
-    smtp_server = 'smtp.qq.com'
+    smtp_server = config.get('Email', 'smtp_server')
 
     server = smtplib.SMTP_SSL(smtp_server)
     server.ehlo(smtp_server)
@@ -187,7 +210,7 @@ def main(email):
 
 
 if __name__ == '__main__':
-    # main('283731869@qq.com')
+    main('283731869@qq.com')
     # 定时任务
     print('开始运行脚本--( # ^^ # )')
     scheduler = BlockingScheduler()
